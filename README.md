@@ -14,4 +14,4 @@ Implement a testing platform such as google tests. (This will require a lot of d
 ## Todo #4: Plan out tools
 I need to make the decision whether I want tools to be built in or set them as requirements and source them separately. This is affect my build process significantly.
 ___ 
-Note: As the repository grows so will the todo list (Documentation, pipeline, diagnostics) I also really hope I dont abandon this repo and leave it to the github code graveyard. 
+Note: As the repository grows so will the todo list (Documentation, pipeline, diagnostics) I also really hope I dont abandon this repo and leave it to the github code graveyard. And my goodness I think I finally fixed my git settings. 
