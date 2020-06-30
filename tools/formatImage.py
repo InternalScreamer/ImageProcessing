@@ -3,7 +3,6 @@ import imageio
 import numpy as np
 import os
 
-    
 class formatImage:
     #todo: Need to add input checking for filepath
     def __init__(self, filepath):
@@ -13,10 +12,10 @@ class formatImage:
         self.mode = 0
         self.width = int(raw.shape[0])
         self.height = int(raw.shape[1])
-        if len(im.shape) == 2:
+        if len(raw.shape) == 2:
             self.payload = raw.ravel()
         else:
-            self.mode = im.shape[2] - 2
+            self.mode = raw.shape[2] - 2
             r = raw[:,:,0].ravel()
             g = raw[:,:,1].ravel()
             b = raw[:,:,2].ravel()
@@ -39,12 +38,21 @@ class formatImage:
         fileout.write((self.payload.tobytes()))
         fileout.write(end_pattern)
         fileout.close()
-        
-#for testing purposes
-if __name__ == "__main__":
-    im = imageio.imread(file)
-    dim = im.shape
-    print(dim)
-    
-    x = formatImage(file)
-    x.outputToFile(loc)
+
+def assembleImage(filepath):
+    fileio = open(filepath, 'rb')
+    header_start = int.from_bytes(fileio.read(2), byteorder='big')
+    mode = int.from_bytes(fileio.read(1), byteorder='big')
+    width = int.from_bytes(fileio.read(4), byteorder='big')
+    height = int.from_bytes(fileio.read(4), byteorder='big')
+    header_end = int.from_bytes(fileio.read(2), byteorder='big')
+    red = np.frombuffer(fileio.read(width*height), dtype=np.uint8)
+    red = np.reshape(red, (height,width))
+    green = np.frombuffer(fileio.read(width*height), dtype=np.uint8)
+    green = np.reshape(green, (height,width))
+    blue = np.frombuffer(fileio.read(width*height), dtype=np.uint8)
+    blue = np.reshape(blue, (height,width))
+    payload = np.dstack((red, green, blue))
+    imageio.imwrite("timage5.png", payload)
+    fileio.close()
+
