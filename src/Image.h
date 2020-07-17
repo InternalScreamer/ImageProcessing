@@ -33,7 +33,8 @@ class image
     
     private:
     void extractHeader();
-    vector<uint8_t> populateFromFile(int offset, int size);
+    void populateFromFile(int offset, int size, vector<uint8_t>& out);
+    uint32_t byte_convert(vector<uint8_t>::iterator start, vector<uint8_t>::iterator end);
 };
 
 #endif
