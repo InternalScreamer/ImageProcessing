@@ -21,7 +21,7 @@ class formatImage:
             b = raw[:,:,2].ravel()
             self.payload = np.concatenate((r,g,b))
             if self.mode == 2:
-                payload = np.concatenate((payload, raw[:,:,3].ravel()))
+                self.payload = np.concatenate((self.payload, raw[:,:,3].ravel()))
 
     def outputToFile(self, loc):
         name = self.filename.split('.')[0]
@@ -55,4 +55,15 @@ def assembleImage(filepath):
     payload = np.dstack((red, green, blue))
     imageio.imwrite("timage5.png", payload)
     fileio.close()
+
+
+
+if __name__ == "__main__":
+    imagePath = "../test/TestImages/"
+    reformatLoc = "../test/ReformattedImages/"
+    directory = os.listdir(imagePath)
+    for file in directory:
+        img = imagePath + file
+        formatImg = formatImage(img)
+        formatImg.outputToFile(reformatLoc)
 
